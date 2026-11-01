@@ -1,0 +1,67 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug + clang-tidy",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "QLOG_BUILD_TESTS": "ON",
+                "QLOG_ENABLE_CLANG_TIDY": "ON",
+                "QLOG_WARNINGS_AS_ERRORS": "OFF",
+                "QLOG_BUILD_BENCHMARKS" : "OFF"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release with Optimizations",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "QLOG_BUILD_TESTS": "OFF",
+                "QLOG_ENABLE_CLANG_TIDY": "OFF",
+                "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON",
+                "QLOG_WARNINGS_AS_ERRORS": "ON",
+                "QLOG_BUILD_BENCHMARKS": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "configurePreset": "release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        }
+    ]
+}
