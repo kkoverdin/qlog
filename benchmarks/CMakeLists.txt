@@ -14,8 +14,7 @@ set(BENCHMARK_ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googlebenchmark)
 
 add_executable(qlog_benchmarks
-  # some sources
-  dummy.cpp
+  bench_spsc.cpp
 )
 
 target_link_libraries(qlog_benchmarks

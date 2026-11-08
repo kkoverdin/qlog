@@ -16,7 +16,8 @@ Checks: >
   -cppcoreguidelines-avoid-do-while,
   -cppcoreguidelines-avoid-c-arrays,
   -modernize-avoid-c-arrays,
-  -cppcoreguidelines-pro-type-vararg
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-pro-bounds-avoid-unchecked-container-access
 
 HeaderFilterRegex: '.*[/\\]include/qlog/.*\.hpp$'
 WarningsAsErrors: '-*'
