@@ -7,7 +7,7 @@
 #include <string_view>
 #include <type_traits>
 
-namespace qlog::serializer {
+namespace qlog::detail {
 
 template <typename T>
 concept StringLike =
@@ -83,4 +83,4 @@ deserialize_args(std::span<const std::byte> buffer) {
   return std::tuple<decoded_type_t<Args>...>{deserialize_one<Args>(buffer)...};
 }
 
-} // namespace qlog::serializer
+} // namespace qlog::detail
