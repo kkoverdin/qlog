@@ -13,7 +13,8 @@ set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 add_executable(qlog_tests
-  dummy.cpp
+  test_spsc.cpp
+  test_serializer.cpp
 )
 
 target_link_libraries(qlog_tests
