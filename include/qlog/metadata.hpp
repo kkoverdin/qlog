@@ -2,9 +2,12 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <format>
 #include <source_location>
 #include <span>
 #include <string_view>
+
+#include "qlog/serializer.hpp"
 
 namespace qlog::meta {
 
@@ -42,7 +45,19 @@ struct LogHeader {
 };
 
 template <typename... Args>
-void format_payload(const LogMetadata *meta, uint64_t timestamp,
-                    std::span<const std::byte> payload, std::string &out) {}
+void format_payload(std::string_view fmt, std::span<const std::byte> payload,
+                    std::string &out) {
+  if constexpr (sizeof...(Args) == 0) {
+    out.append(fmt);
+    return;
+  }
+  auto tup = detail::deserialize_args<Args...>(payload);
+  std::apply(
+      [&](auto &...unpacked_args) {
+        std::vformat_to(std::back_inserter(out), fmt,
+                        std::make_format_args(unpacked_args...));
+      },
+      tup);
+}
 
 } // namespace qlog::meta
